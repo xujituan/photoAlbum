@@ -1,0 +1,561 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --void: #0a0612;
+  --ink: #1a0f2e;
+  --smoke: #2a1f3e;
+  --aurora-1: #00ffa3;
+  --aurora-2: #ff006e;
+  --aurora-3: #00d4ff;
+  --gold: #d4af37;
+  --cream: #f5e6d3;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  background: var(--void);
+  color: var(--cream);
+  font-family: 'Manrope', system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+body {
+  background:
+    radial-gradient(ellipse at 20% 10%, rgba(255, 0, 110, 0.08), transparent 50%),
+    radial-gradient(ellipse at 80% 80%, rgba(0, 255, 163, 0.06), transparent 50%),
+    radial-gradient(ellipse at 50% 50%, rgba(0, 212, 255, 0.05), transparent 60%),
+    var(--void);
+  min-height: 100vh;
+}
+
+/* 自定义滚动条 */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--void);
+}
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, var(--aurora-1), var(--aurora-2));
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, var(--aurora-3), var(--aurora-1));
+}
+
+/* 漩涡扫光 */
+.cinematic-sweep {
+  position: absolute;
+  inset: -20%;
+  background: conic-gradient(
+    from 0deg at 50% 50%,
+    transparent 0deg,
+    rgba(212, 175, 55, 0.06) 30deg,
+    transparent 60deg,
+    rgba(0, 255, 163, 0.05) 150deg,
+    transparent 200deg,
+    rgba(255, 0, 110, 0.06) 280deg,
+    transparent 340deg
+  );
+  animation: sweep 28s linear infinite;
+  mix-blend-mode: screen;
+  filter: blur(40px);
+}
+
+@keyframes sweep {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* 自定义光标 - 鎏金小点 */
+.cursor-glow {
+  position: fixed;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 70;
+  background: radial-gradient(circle, rgba(212, 175, 55, 0.55) 0%, transparent 60%);
+  transform: translate(-50%, -50%);
+  transition: width 0.2s, height 0.2s, opacity 0.2s;
+  mix-blend-mode: screen;
+}
+
+/* 自定义三段式光标 - 中心点 / 环 / 拖尾 */
+.custom-cursor-active,
+.custom-cursor-active * {
+  cursor: none !important;
+}
+
+.cursor-dot,
+.cursor-ring,
+.cursor-trail {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 70;
+  border-radius: 50%;
+  will-change: transform, opacity;
+  transition: opacity 0.3s ease;
+  mix-blend-mode: screen;
+}
+
+.cursor-dot {
+  width: 6px;
+  height: 6px;
+  background: #f5e6d3;
+  box-shadow:
+    0 0 6px rgba(245, 230, 211, 0.9),
+    0 0 14px rgba(212, 175, 55, 0.7);
+}
+
+.cursor-ring {
+  width: 32px;
+  height: 32px;
+  border: 1px solid rgba(212, 175, 55, 0.6);
+  box-shadow:
+    inset 0 0 8px rgba(212, 175, 55, 0.18),
+    0 0 12px rgba(212, 175, 55, 0.2);
+  transition: opacity 0.3s ease;
+}
+
+.cursor-trail {
+  width: 60px;
+  height: 60px;
+  background: radial-gradient(
+    circle,
+    rgba(212, 175, 55, 0.12) 0%,
+    rgba(255, 0, 110, 0.05) 40%,
+    transparent 70%
+  );
+  filter: blur(4px);
+}
+
+/* 鎏金渐变文字 */
+.text-gold-shine {
+  background: linear-gradient(
+    90deg,
+    #d4af37 0%,
+    #f5e6d3 25%,
+    #d4af37 50%,
+    #f5e6d3 75%,
+    #d4af37 100%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shimmer 3s linear infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* 玻璃拟态 */
+.glass {
+  background: rgba(26, 15, 46, 0.55);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(212, 175, 55, 0.18);
+}
+
+.glass-strong {
+  background: rgba(10, 6, 18, 0.75);
+  backdrop-filter: blur(28px) saturate(200%);
+  -webkit-backdrop-filter: blur(28px) saturate(200%);
+  border: 1px solid rgba(212, 175, 55, 0.25);
+}
+
+/* 鎏金描边按钮 */
+.btn-gold {
+  position: relative;
+  background: rgba(212, 175, 55, 0.08);
+  color: var(--gold);
+  border: 1px solid var(--gold);
+  transition: all 0.4s ease;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+.btn-gold:hover {
+  background: rgba(212, 175, 55, 0.18);
+  box-shadow:
+    0 0 24px rgba(212, 175, 55, 0.4),
+    inset 0 0 12px rgba(212, 175, 55, 0.15);
+  color: var(--cream);
+}
+
+/* 极光发光 */
+.aurora-glow {
+  box-shadow:
+    0 0 40px rgba(0, 255, 163, 0.3),
+    0 0 80px rgba(255, 0, 110, 0.15),
+    0 0 120px rgba(0, 212, 255, 0.1);
+}
+
+/* 极光背景层 */
+.aurora-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+.aurora-blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.5;
+  mix-blend-mode: screen;
+}
+
+/* 散景 bokeh 粒子 */
+.bokeh-field {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+  mix-blend-mode: screen;
+}
+.bokeh-dot {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(8px);
+  animation: bokehFloat linear infinite;
+  will-change: transform, opacity;
+}
+@keyframes bokehFloat {
+  0% {
+    transform: translateY(0) translateX(0) scale(0.8);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.6;
+  }
+  50% {
+    transform: translateY(-50vh) translateX(20px) scale(1.1);
+    opacity: 0.8;
+  }
+  90% {
+    opacity: 0.5;
+  }
+  100% {
+    transform: translateY(-110vh) translateX(-10px) scale(0.7);
+    opacity: 0;
+  }
+}
+
+/* 胶片噪点 */
+.film-grain {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 60;
+  opacity: 0.06;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml;utf8,<svg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.95' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+
+/* Leaflet 暗色化 */
+.leaflet-container {
+  background: #0a0612 !important;
+  font-family: 'Manrope', sans-serif !important;
+}
+.leaflet-tile {
+  filter: hue-rotate(180deg) invert(0.92) brightness(0.85) contrast(0.9) saturate(0.6);
+}
+.leaflet-control-attribution {
+  background: rgba(10, 6, 18, 0.7) !important;
+  color: var(--cream) !important;
+  font-size: 10px !important;
+}
+.leaflet-control-attribution a {
+  color: var(--gold) !important;
+}
+.leaflet-popup-content-wrapper,
+.leaflet-popup-tip {
+  background: var(--ink) !important;
+  color: var(--cream) !important;
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  border-radius: 12px !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6) !important;
+}
+.leaflet-popup-content {
+  margin: 0 !important;
+  padding: 0 !important;
+  font-family: 'Manrope', sans-serif;
+}
+
+/* 鎏金发光图钉 */
+.gold-pin {
+  width: 22px;
+  height: 22px;
+  background: radial-gradient(circle at 30% 30%, #f5e6d3 0%, #d4af37 50%, #8b6914 100%);
+  border-radius: 50% 50% 50% 0;
+  transform: rotate(-45deg);
+  box-shadow:
+    0 0 16px rgba(212, 175, 55, 0.7),
+    0 0 32px rgba(212, 175, 55, 0.3);
+  position: relative;
+}
+.gold-pin::after {
+  content: '';
+  position: absolute;
+  top: 6px;
+  left: 6px;
+  width: 6px;
+  height: 6px;
+  background: var(--void);
+  border-radius: 50%;
+}
+
+/* 拍立得 */
+.polaroid {
+  background: #f5e6d3;
+  padding: 12px 12px 48px 12px;
+  box-shadow:
+    0 12px 40px rgba(0, 0, 0, 0.5),
+    0 4px 12px rgba(0, 0, 0, 0.3);
+  position: relative;
+  transition: all 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.polaroid::before {
+  content: '';
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  width: 8px;
+  height: 8px;
+  background: radial-gradient(circle, #d4af37 0%, #8b6914 100%);
+  border-radius: 50%;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+}
+.polaroid:hover {
+  transform: scale(1.04) rotate(0deg) !important;
+  z-index: 10;
+  box-shadow:
+    0 24px 60px rgba(0, 0, 0, 0.7),
+    0 8px 20px rgba(0, 0, 0, 0.4),
+    0 0 32px rgba(212, 175, 55, 0.2);
+}
+
+/* 时间轴 */
+.timeline-line {
+  background: linear-gradient(180deg, transparent 0%, rgba(212,175,55,0.45) 5%, rgba(0,255,163,0.35) 50%, rgba(255,0,110,0.3) 95%, transparent 100%);
+  box-shadow: 0 0 6px rgba(212, 175, 55, 0.25);
+}
+
+/* 心情光晕 */
+.mood-glow {
+  filter: drop-shadow(0 0 8px currentColor);
+}
+
+/* 输入框 */
+input,
+textarea,
+select {
+  font-family: 'Manrope', sans-serif;
+  background: rgba(26, 15, 46, 0.5);
+  color: var(--cream);
+  border: 1px solid rgba(212, 175, 55, 0.25);
+  border-radius: 8px;
+  padding: 10px 14px;
+  transition: all 0.3s ease;
+  width: 100%;
+  outline: none;
+}
+input:focus,
+textarea:focus,
+select:focus {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 2px rgba(212, 175, 55, 0.18), 0 0 16px rgba(212, 175, 55, 0.1);
+  background: rgba(26, 15, 46, 0.7);
+}
+input::placeholder,
+textarea::placeholder {
+  color: rgba(245, 230, 211, 0.35);
+}
+
+/* ====== 电影感 + 花哨增强 ====== */
+
+/* 巨型 Hero 文字：克制鎏金 */
+.hero-title {
+  position: relative;
+  display: inline-block;
+  background: linear-gradient(180deg, #fff7e0 0%, #f5e6d3 50%, #d4af37 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* 3D 倾斜 stat 卡片 - 极轻 */
+.stat-card-3d {
+  transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.5s ease, border-color 0.5s ease;
+  transform-style: preserve-3d;
+  will-change: transform;
+  border: 1px solid rgba(212, 175, 55, 0.12);
+}
+.stat-card-3d:hover {
+  transform: perspective(1000px) rotateX(2deg) rotateY(-2deg) translateY(-2px);
+  border-color: rgba(212, 175, 55, 0.35);
+  box-shadow:
+    0 0 0 1px rgba(212, 175, 55, 0.1),
+    0 16px 40px rgba(0, 0, 0, 0.5),
+    0 0 24px rgba(212, 175, 55, 0.08);
+}
+
+/* 心情光谱 - 极轻 hover */
+.mood-bubble {
+  position: relative;
+  transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), border-color 0.4s ease;
+  border: 1px solid rgba(212, 175, 55, 0.1);
+}
+.mood-bubble::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: 50%;
+  background: radial-gradient(circle, currentColor 0%, transparent 70%);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+  z-index: -1;
+  filter: blur(8px);
+}
+.mood-bubble:hover::before {
+  opacity: 0.35;
+}
+.mood-bubble:hover {
+  transform: translateY(-3px) scale(1.04);
+  border-color: rgba(212, 175, 55, 0.3);
+}
+
+/* 飘动金粉 */
+.gold-spark {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: radial-gradient(circle, #ffe8a3 0%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+  animation: sparkFloat 4s ease-in-out infinite;
+}
+@keyframes sparkFloat {
+  0%, 100% { transform: translate(0, 0) scale(0); opacity: 0; }
+  20% { opacity: 1; transform: scale(1); }
+  100% { transform: translate(var(--dx, 30px), var(--dy, -60px)) scale(0); opacity: 0; }
+}
+
+/* 字幕条底部滚动 */
+.ticker {
+  display: inline-block;
+  white-space: nowrap;
+  animation: ticker 30s linear infinite;
+}
+@keyframes ticker {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* Now showing 滚动条 */
+.now-showing-bar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 2.5vh;
+  z-index: 56;
+  pointer-events: auto;
+}
+.ticker-track {
+  display: flex;
+  gap: 2rem;
+  white-space: nowrap;
+  animation: tickerScroll 60s linear infinite;
+  will-change: transform;
+}
+@keyframes tickerScroll {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+/* Glitch 文字故障效果（极轻）*/
+.glitch {
+  position: relative;
+  display: inline-block;
+}
+.glitch::before,
+.glitch::after {
+  content: attr(data-text);
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.glitch::before {
+  color: #ff006e;
+  transform: translate(-1px, 0);
+  mix-blend-mode: screen;
+  opacity: 0.6;
+  animation: glitch1 4s steps(1) infinite;
+}
+.glitch::after {
+  color: #00d4ff;
+  transform: translate(1px, 0);
+  mix-blend-mode: screen;
+  opacity: 0.6;
+  animation: glitch2 4s steps(1) infinite;
+}
+@keyframes glitch1 {
+  0%, 92%, 100% { transform: translate(0, 0); opacity: 0; }
+  93% { transform: translate(-3px, 0); opacity: 0.7; }
+  95% { transform: translate(2px, 0); opacity: 0.5; }
+}
+@keyframes glitch2 {
+  0%, 90%, 100% { transform: translate(0, 0); opacity: 0; }
+  92% { transform: translate(3px, 0); opacity: 0.7; }
+  96% { transform: translate(-2px, 0); opacity: 0.5; }
+}
+
+/* ====== prefers-reduced-motion 降级 ====== */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .aurora-blob,
+  .cinematic-sweep {
+    animation: none !important;
+  }
+  .film-grain {
+    display: none;
+  }
+}
