@@ -117,20 +117,20 @@ memoriesRouter.put('/:id', (req, res) => {
     `UPDATE memories SET
       title = COALESCE(?, title),
       taken_at = COALESCE(?, taken_at),
-      location_name = ?,
-      lat = ?,
-      lng = ?,
+      location_name = COALESCE(?, location_name),
+      lat = COALESCE(?, lat),
+      lng = COALESCE(?, lng),
       mood = COALESCE(?, mood),
-      story = ?
+      story = COALESCE(?, story)
      WHERE id = ?`
   ).run(
     title ?? null,
     taken_at ?? null,
-    location_name ?? row.location_name,
-    lat ?? row.lat,
-    lng ?? row.lng,
+    location_name ?? null,
+    lat ?? null,
+    lng ?? null,
     mood ?? null,
-    story ?? row.story,
+    story ?? null,
     req.params.id
   );
 

@@ -75,5 +75,6 @@ export const useMemoryStore = create<MemoryState>((set, get) => ({
   update: async (id, data) => {
     const updated = await api.update(id, data);
     set((s) => ({ memories: s.memories.map((m) => (m.id === id ? updated : m)) }));
+    get().fetchStats();
   },
 }));
